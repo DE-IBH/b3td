@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 import sys
 import environ
 
+# reading .env file
 env = environ.Env()
 environ.Env.read_env(env.str('ENV_FILE', default='.env'))
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'web',
 ]
 
 MIDDLEWARE = [
@@ -108,9 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = env.str('LANGUAGE_CODE', default='en-us')
+TIME_ZONE = env.str('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 
@@ -123,8 +125,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# B3TD SETTINGS
+
+B3TD_ROOM_ID_ALLOWED_CHARS = env.str('B3TD_ROOM_ID_ALLOWED_CHARS', default='abcdefghijklmnopqrstuvwxyz0123456789')  # allowed chars
+B3TD_ROOM_LENGTH = int(env.str('B3TD_ROOM_LENGTH', default=7))
+
+B3TD_PIN_ALLOWED_CHARS = env.str('B3TD_PIN_ALLOWED_CHARS', default='0123456789')
+B3TD_PIN_LENGTH = int(env.str('B3TD_PIN_LENGTH', default=4))
+
+B3TD_MEETING_MAX_LIFETIME = int(env.str('B3TD_MEETING_MAX_LIFETIME', default=900))
+B3TD_MEETING_MAX_JOINS = int(env.str('B3TD_MEETING_MAX_JOINS', default=7))
+B3TD_MEETING_MAX_MEETINGS = int(env.str('B3TD_MEETING_MAX_MEETINGS', default=20))
+
+B3TD_BBB_API_BASE_DOMAIN = env.str('B3TD_BBB_API_BASE_DOMAIN')
+B3TD_BBB_SECRET = env.str('B3TD_BBB_SECRET')
+
+
