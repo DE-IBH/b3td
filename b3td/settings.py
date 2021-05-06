@@ -17,7 +17,7 @@ import environ
 
 # reading .env file
 env = environ.Env()
-environ.Env.read_env(env.str('ENV_FILE', default='.env'))
+env.read_env(env.str('ENV_FILE', default='.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,10 +82,7 @@ WSGI_APPLICATION = 'b3td.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db()
 }
 
 
@@ -135,17 +132,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # B3TD SETTINGS
 
+B3TD_BASE_URL = env.str('B3TD_BASE_URL')
+
 B3TD_ROOM_ID_ALLOWED_CHARS = env.str('B3TD_ROOM_ID_ALLOWED_CHARS', default='abcdefghijklmnopqrstuvwxyz0123456789')  # allowed chars
-B3TD_ROOM_LENGTH = int(env.str('B3TD_ROOM_LENGTH', default=7))
+B3TD_ROOM_ID_LENGTH = int(env.str('B3TD_ROOM_ID_LENGTH', default=7))
 
 B3TD_PIN_ALLOWED_CHARS = env.str('B3TD_PIN_ALLOWED_CHARS', default='0123456789')
 B3TD_PIN_LENGTH = int(env.str('B3TD_PIN_LENGTH', default=4))
 
-B3TD_MEETING_MAX_LIFETIME = int(env.str('B3TD_MEETING_MAX_LIFETIME', default=900))
+B3TD_MEETING_MAX_LIFETIME = int(env.str('B3TD_MEETING_MAX_LIFETIME', default=15))  # unit are minutes
 B3TD_MEETING_MAX_JOINS = int(env.str('B3TD_MEETING_MAX_JOINS', default=7))
 B3TD_MEETING_MAX_MEETINGS = int(env.str('B3TD_MEETING_MAX_MEETINGS', default=20))
+B3TD_MEETING_BANNER_TEXT = env.str('B3TD_MEETING_BANNER_TEXT', default="BBB Test Meeting")
 
-B3TD_BBB_API_BASE_DOMAIN = env.str('B3TD_BBB_API_BASE_DOMAIN')
+B3TD_BBB_API_BASE_DOMAIN = env.str('B3TD_BBB_API_BASE_DOMAIN')  # https://bbb.example.org/bigbluebutton/api/
 B3TD_BBB_SECRET = env.str('B3TD_BBB_SECRET')
 
+B3TD_HTML_TITLE = env.str('B3TD_HTML_TITLE', default="BigBlueButton Test Drive")
+B3TD_HTML_TEXT_NO_MEETINGS = env.str('B3TD_HTML_TEXT_NO_MEETINGS', default="There are currently no open meetings accessible.")
 
