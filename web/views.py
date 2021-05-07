@@ -66,7 +66,7 @@ You can also invite others via phone by sharing the following phone number and P
 
         url = "{}{}".format(settings.B3TD_BASE_URL, meeting.room_url)
 
-        return
+        return HttpResponseRedirect(url)
 
     else:
         content = {
