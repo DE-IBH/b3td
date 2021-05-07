@@ -1,3 +1,19 @@
+# B3TD - BigBlueButton Test Drive
+# Copyright (C) 2020-2021 IBH IT-Service GmbH
+#
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+# for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 """
 Django settings for b3td project.
 
@@ -134,7 +150,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 B3TD_BASE_URL = env.str('B3TD_BASE_URL')
 
-B3TD_ROOM_ID_ALLOWED_CHARS = env.str('B3TD_ROOM_ID_ALLOWED_CHARS', default='abcdefghijklmnopqrstuvwxyz0123456789')  # allowed chars
 B3TD_ROOM_ID_LENGTH = int(env.str('B3TD_ROOM_ID_LENGTH', default=7))
 
 B3TD_PIN_ALLOWED_CHARS = env.str('B3TD_PIN_ALLOWED_CHARS', default='0123456789')

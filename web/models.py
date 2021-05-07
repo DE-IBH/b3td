@@ -1,4 +1,21 @@
+# B3TD - BigBlueButton Test Drive
+# Copyright (C) 2020-2021 IBH IT-Service GmbH
+#
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+# for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 from django.db import models
+from django.contrib import admin
 from django.utils.crypto import get_random_string
 from django.conf import settings
 from django.utils import timezone
@@ -14,11 +31,14 @@ def set_default_joins():
 
 
 def set_default_random_room_id():
-    if settings.B3TD_ROOM_ID_LENGTH % 2 == 1 and settings.B3TD_ROOM_ID_LENGTH > 1:
-        string_length = int(settings.B3TD_ROOM_ID_LENGTH / 2)
-        return "{}-{}".format(get_random_string(string_length, settings.B3TD_ROOM_ID_ALLOWED_CHARS), get_random_string(string_length, settings.B3TD_ROOM_ID_ALLOWED_CHARS))
-    elif settings.B3TD_ROOM_ID_LENGTH > 0:
-        return get_random_string(get_random_string(settings.B3TD_ROOM_ID_LENGTH, settings.B3TD_ROOM_ID_ALLOWED_CHARS))
+    allowed_chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    string_parts = []
+    for index in range(0, settings.B3TD_ROOM_ID_LENGTH, 3):
+        if index + 3 < settings.B3TD_ROOM_ID_LENGTH:
+            string_parts.append(get_random_string(3, allowed_chars))
+        else:
+            string_parts.append(get_random_string(settings.B3TD_ROOM_ID_LENGTH - index, allowed_chars))
+    return "-".join(string_parts)
 
 
 def set_default_random_room_name():
@@ -49,3 +69,8 @@ class Meeting(models.Model):
     @property
     def room_url(self):
         return "{}{}".format(settings.B3TD_BASE_URL, self.room_id)
+
+
+class MeetingAdmin(admin.ModelAdmin):
+    model = Meeting
+    list_display = ["room_id", "room_name", "status", "end_of_life"]
