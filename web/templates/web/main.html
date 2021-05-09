@@ -1,12 +1,27 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ title }}</title>
-</head>
-<body>
-<form method="get" action="{{ base_url }}/createmeeting">
-    <button type="submit" value="0">Testmeeting starten</button>
-</form>
-</body>
-</html>
+{% extends 'web/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="b3lb-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-5">BigBlueButton ausprobieren</h1>
+  <p class="lead">
+    Die Eingabe genügt um umgehend ein Testmeeting zu starten. Weitere Teilnehmer können anschließend über den Link im
+    Meeting hinzugefügt werden.
+  </p>
+  <p>
+    Die maximale Anzahl der Teilnehmer ist auf X und die Dauer auf Y pro Meeting begrenzt.
+  </p>
+  <form method="post" action="createmeeting">
+    {% csrf_token %}
+    <input type="text" default="Your name">
+    <button type="submit" class="btn btn-primary">Meeting starten</button>
+  </form>
+
+  <footer class="pt-4 my-md-5 border-top text-center text-muted">
+    <p style="font-style: italic">
+      This project uses BigBlueButton and is not endorsed or certified by BigBlueButton Inc. BigBlueButton and
+      the BigBlueButton Logo are trademarks of BigBlueButton Inc.
+    </p>
+  </footer>
+</div>
+{% endblock %}

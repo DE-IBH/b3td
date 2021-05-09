@@ -1,0 +1,27 @@
+{% extends 'bootstrap4/bootstrap4.html' %}
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='light' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}{{ title }}{% endblock %}
+
+{% block bootstrap4_content %}
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow b3lb-bg">
+        <h5 class="my-0 mr-md-auto font-weight-normal text-white">B3TD</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 btn btn-primary text-white" href="https://www.bbbconf.de/">bbbCONF</a>
+        </nav>
+    </div>
+    {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+    {% block content %}(no content){% endblock %}
+{% endblock %}
