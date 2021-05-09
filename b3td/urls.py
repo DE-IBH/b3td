@@ -17,10 +17,11 @@
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from web.views import create_meeting, join_meeting
+from web.views import main, create_meeting, join_meeting
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url('', main, name="home"),
     url('create', create_meeting),
     url(r'^(?P<room_id>[a-z0-9]{1,3}(-[a-z0-9]{1,3})*)$', join_meeting)
 ]
