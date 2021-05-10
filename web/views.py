@@ -29,8 +29,7 @@ import requests as rq
 # Create your views here.
 def main(request):
     content = {
-        "title": settings.B3TD_HTML_TITLE,
-        "base_url": settings.B3TD_BASE_URL
+        "title": settings.B3TD_HTML_TITLE
     }
     return render(request, "web/main.html", content)
 
